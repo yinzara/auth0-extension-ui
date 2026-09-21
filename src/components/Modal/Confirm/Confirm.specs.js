@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
@@ -21,7 +21,7 @@ describe('Confirm', () => {
 
   describe('test elements', () => {
     beforeEach((done) => {
-      wrapper = shallow(
+      wrapper = mount(
         <Confirm
           title={field.title}
           show={field.show}
@@ -38,11 +38,11 @@ describe('Confirm', () => {
     });
 
     it('should show one modal', () => {
-      expect(wrapper.find('.Confirm--myclass')).to.have.length(1);
+      expect(wrapper.find('div.Confirm--myclass')).to.have.length(1);
     });
 
     it('should have a close button', () => {
-      expect(wrapper.find('Button').length).to.be.above(0);
+      expect(wrapper.find('button.close').length).to.be.above(0);
     });
   });
 
@@ -51,7 +51,7 @@ describe('Confirm', () => {
       field.onCancel = sinon.spy();
       field.onConfirm = sinon.spy();
 
-      wrapper = shallow(
+      wrapper = mount(
         <Confirm
           title={field.title}
           show={field.show}
@@ -67,12 +67,12 @@ describe('Confirm', () => {
     });
 
     it('should call onCancel if modal is closed', () => {
-      wrapper.find('Button .button-cancel').first().simulate('click');
+      wrapper.find('button.button-cancel').simulate('click');
       expect(field.onCancel.calledOnce).to.equal(true);
     });
 
     it('should call onConfirm if modal is submitted', () => {
-      wrapper.find('Button .button-confirm').simulate('click');
+      wrapper.find('button.button-confirm').simulate('click');
       expect(field.onConfirm.calledOnce).to.equal(true);
     });
   });

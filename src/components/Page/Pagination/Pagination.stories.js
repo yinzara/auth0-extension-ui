@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { action } from 'storybook/actions';
 
 import Pagination from './';
 
@@ -13,11 +13,18 @@ function renderField(field) {
   );
 }
 
-storiesOf('Pagination', module)
-  .add('default view', () => {
+export default {
+  title: 'Pagination'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const field = {
       totalItems: 5,
       perPage: 2
     };
     return renderField(field);
-  });
+  }
+};
+

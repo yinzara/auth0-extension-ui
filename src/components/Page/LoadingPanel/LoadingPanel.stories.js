@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 
 import LoadingPanel from './';
 
@@ -17,8 +16,13 @@ function renderField(field) {
   );
 }
 
-storiesOf('LoadingPanel', module)
-  .add('default view', () => {
+export default {
+  title: 'LoadingPanel'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const field = {
       spinnerStyle: { height: '16px', width: '16px' },
       animationStyle: { paddingTop: '0px', paddingBottom: '0px', marginTop: '0px', marginBottom: '10px' },
@@ -26,4 +30,6 @@ storiesOf('LoadingPanel', module)
       delay: 0
     };
     return renderField(field);
-  });
+  }
+};
+

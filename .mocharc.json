@@ -1,0 +1,5 @@
+{
+  "require": [ "@babel/register", "ignore-styles", "./test/setup.js" ],
+  "spec": "src/components/**/*.specs.js",
+  "extension": [ "js" ]
+}

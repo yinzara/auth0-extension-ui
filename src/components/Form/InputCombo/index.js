@@ -1,10 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 class InputCombo extends Component {
   static defaultProps = {
     placeholder: 'Please select...'
-  }
+  };
 
   onChange = (event) => {
     const { input: { onChange } } = this.props;
@@ -13,7 +14,7 @@ class InputCombo extends Component {
     if (this.props.onChange) {
       this.props.onChange(event);
     }
-  }
+  };
 
   renderOptions(options) {
     return options.map((option, index) => (

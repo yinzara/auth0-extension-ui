@@ -1,84 +1,64 @@
-import React, { Component, PropTypes } from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import classNames from 'classnames';
+import useIsActive from '../../utils/useIsActive';
 import './SidebarItem.styl';
 
-class SidebarItem extends Component {
-  state = {
-    open: false,
-    active: false
-  }
+const SidebarItem = ({ route, title, icon, children }) => {
+  const active = useIsActive(route);
+  const [ open, setOpen ] = useState(active);
 
-  componentWillReceiveProps(nextProps) {
-    let open = this.state.open;
-    const active = this.context.router.isActive(nextProps.route);
-    if (!active && this.state.active) {
-      open = false;
-    }
-    this.setState({
+  // Open the group when its route becomes active and close it when it stops being active.
+  useEffect(() => {
+    setOpen(active);
+  }, [ active ]);
+
+  if (children && children.length) {
+    const groupClass = classNames({
+      submenu: true,
+      open,
       active,
-      open: open || active
-    });
-  }
-
-  onClick = () => {
-    this.setState({
-      open: !this.state.open
-    });
-  }
-
-  render() {
-    const { route, children } = this.props;
-
-    if (children && children.length) {
-      const groupClass = classNames({
-        submenu: true,
-        open: this.state.open,
-        active: this.context.router.isActive(this.props.route),
-        'sidebar-item': true
-      });
-
-      return (
-        <li className={groupClass}>
-          <a href="#" onClick={this.onClick}>
-            <div className="item-image-container">
-              {this.props.icon}
-            </div>
-            <span>{this.props.title}</span>
-          </a>
-          <ul style={{ display: this.state.open ? 'block' : 'none' }}>
-            {children}
-          </ul>
-        </li>
-      );
-    }
-
-    const linkClass = classNames({
-      active: this.context.router.isActive(this.props.route),
       'sidebar-item': true
     });
+
     return (
-      <li className={linkClass}>
-        <Link to={`${this.props.route}`}>
+      <li className={groupClass}>
+        <a href="#" onClick={(e) => { e.preventDefault(); setOpen(!open); }}>
           <div className="item-image-container">
-            {this.props.icon}
+            {icon}
           </div>
-          <span>{this.props.title}</span>
-        </Link>
+          <span>{title}</span>
+        </a>
+        <ul style={{ display: open ? 'block' : 'none' }}>
+          {children}
+        </ul>
       </li>
     );
   }
-}
+
+  const linkClass = classNames({
+    active,
+    'sidebar-item': true
+  });
+
+  return (
+    <li className={linkClass}>
+      <Link to={`${route}`}>
+        <div className="item-image-container">
+          {icon}
+        </div>
+        <span>{title}</span>
+      </Link>
+    </li>
+  );
+};
 
 SidebarItem.propTypes = {
   route: PropTypes.string,
   title: PropTypes.string.isRequired,
   icon: PropTypes.element,
   children: PropTypes.node
-};
-
-SidebarItem.contextTypes = {
-  router: PropTypes.object.isRequired
 };
 
 export default SidebarItem;

@@ -1,10 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class SearchBar extends Component {
   static defaultProps = {
     resetButtonText: 'Reset',
     inputId: ''
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -45,7 +46,7 @@ class SearchBar extends Component {
     return (
       <div className="col-xs-12 help-block">
         To perform your search, press <span className="keyboard-button">enter</span>.
-        You can also search for specific fields, eg: <strong>email:"john@doe.com"</strong>.
+        You can also search for specific fields, eg: <strong>email:&quot;john@doe.com&quot;</strong>.
       </div>
     );
   };

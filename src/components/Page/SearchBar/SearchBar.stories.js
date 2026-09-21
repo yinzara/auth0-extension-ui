@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { action } from 'storybook/actions';
 
 import SearchBar from './';
 
@@ -19,8 +19,13 @@ function renderField(field) {
   );
 }
 
-storiesOf('SearchBar', module)
-  .add('default view', () => {
+export default {
+  title: 'SearchBar'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const field = {
       placeholder: 'The placeholder',
       searchOptions: [
@@ -35,8 +40,12 @@ storiesOf('SearchBar', module)
       ]
     };
     return renderField(field);
-  })
-  .add('instructions view', () => {
+  }
+};
+
+export const InstructionsView = {
+  name: 'instructions view',
+  render: () => {
     const field = {
       placeholder: 'The placeholder',
       searchOptions: [
@@ -52,8 +61,12 @@ storiesOf('SearchBar', module)
       showInstructions: true
     };
     return renderField(field);
-  })
-  .add('with diferent icon', () => {
+  }
+};
+
+export const WithDiferentIcon = {
+  name: 'with diferent icon',
+  render: () => {
     const field = {
       placeholder: 'The placeholder',
       searchOptions: [
@@ -69,8 +82,12 @@ storiesOf('SearchBar', module)
       iconCode: 488
     };
     return renderField(field);
-  })
-  .add('with init search value', () => {
+  }
+};
+
+export const WithInitSearchValue = {
+  name: 'with init search value',
+  render: () => {
     const field = {
       placeholder: 'The placeholder',
       searchOptions: [
@@ -87,4 +104,6 @@ storiesOf('SearchBar', module)
       searchValue: 'test'
     };
     return renderField(field);
-  });
+  }
+};
+

@@ -1,16 +1,27 @@
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { action } from 'storybook/actions';
 
 import TableTextCell from './';
 
-storiesOf('TableTextCell', module)
-  .add('default view', () => (
+export default {
+  title: 'TableTextCell'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => (
     <TableTextCell>
       This is the TableTextCell children.
     </TableTextCell>
-  ))
-  .add('with link', () => (
+  )
+};
+
+export const WithLink = {
+  name: 'with link',
+  render: () => (
     <TableTextCell onClick={action('onClick')}>
       This is the TableTextCell children.
     </TableTextCell>
-  ));
+  )
+};
+

@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 
 import Error from './';
 
@@ -9,10 +8,17 @@ function renderField(field) {
   );
 }
 
-storiesOf('Error', module)
-  .add('default view', () => {
+export default {
+  title: 'Error'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const field = {
       message: 'This is the error message'
     };
     return renderField(field);
-  });
+  }
+};
+

@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 import { Field } from 'redux-form';
 
 import InputSwitchItem from './';
@@ -17,13 +16,22 @@ function renderField(field) {
   );
 }
 
-storiesOf('InputSwitchItem', module)
-  .addDecorator(story => (<Provider store={store}><FakeForm>{story()}</FakeForm></Provider>))
-  .add('default view', () => {
+export default {
+  title: 'InputSwitchItem',
+  decorators: [
+    Story => (<Provider store={store}><FakeForm><Story /></FakeForm></Provider>)
+  ]
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const field = {
       title: 'My Title',
       description: (<span>My Description</span>),
       name: 'FieldName'
     };
     return renderField(field);
-  });
+  }
+};
+

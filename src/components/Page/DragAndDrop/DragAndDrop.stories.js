@@ -1,7 +1,14 @@
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { action } from 'storybook/actions';
 
 import DragAndDrop from './';
 
-storiesOf('DragAndDrop', module)
-  .add('default view', () => (<DragAndDrop onDrop={action('onDrop')} />));
+export default {
+  title: 'DragAndDrop'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => (<DragAndDrop onDrop={action('onDrop')} />)
+};
+

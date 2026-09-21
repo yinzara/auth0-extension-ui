@@ -1,6 +1,6 @@
 # Auth0 Extension UI
 
-[![npm](https://img.shields.io/npm/dt/https://www.npmjs.com/package/auth0-extension-ui.svg)](https://www.npmjs.com/package/auth0-extension-ui)
+[![npm](https://img.shields.io/npm/dt/auth0-extension-ui.svg)](https://www.npmjs.com/package/auth0-extension-ui)
 
 This extension is a components library which is used by other extensions. You can find components code inside `src/components`.
 
@@ -9,6 +9,26 @@ Each component has:
 - the specs file (tests)
 - the stories file (which has the examples that appear in storybook)
 
+# Installation
+Requires Node.js >= 22.12 and the peer dependencies `react` and `react-dom` (^18) and `react-router` (^7).
+
+```
+npm install auth0-extension-ui
+```
+
+The package can also be installed straight from GitHub (the `dist` folder is built by the `prepare` script during install):
+
+```
+npm install auth0-extensions/auth0-extension-ui
+npm install auth0-extensions/auth0-extension-ui#<branch-or-tag>
+```
+
+Note: `SidebarItem`, `TabPane` and `TableRouteCell` must be rendered inside a react-router `<Router>`.
+
+# Development
+- `npm run build`: builds `dist/index.js` (also run automatically on `npm install` from a git URL).
+- `npm test`: runs the specs. `npm run lint`: lints `src`.
+
 # Run storybook
 `npm run storybook` or go to [auth0-extension-ui github pages](https://auth0-extensions.github.io/auth0-extension-ui/)
 
@@ -16,7 +36,7 @@ Each component has:
 Run `npm run publish-storybook` to publish a new storybook version to github pages.
 
 # Adding tests to your components
-Simply add them to `tests` folder with `specs.js` extension. `npm test` will run them all.
+Add a `[component].specs.js` file next to the component. `npm test` will run them all.
 
 # Additional notes
 Auth0 styles were added in [.storybook/head.html](https://github.com/auth0-extensions/auth0-extension-ui/tree/master/.storybook/head.html).
@@ -27,7 +47,7 @@ The list of components can be found in [src/components/index.js](https://github.
 Components are divided in different categories taking into account their responsibilities.
 
 ### Categories
-- `Form`: components inside `src/components/Form` are components that should be used in forms and use [redux-form v6](https://redux-form.com). Note that these components may or may not accept `label` property, which is going to render them differently;
+- `Form`: components inside `src/components/Form` are components that should be used in forms and use [redux-form v8](https://redux-form.com/8.3.0/). Note that these components may or may not accept `label` property, which is going to render them differently;
 - `Header`: contains headers for pages;
 - `Messages`: has Alert components (for success, error, etc messages);
 - `Modal`: custom components for modals;

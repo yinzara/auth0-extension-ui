@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 
 import Scope from './';
 
@@ -9,12 +8,19 @@ function renderField(field, input) {
   );
 }
 
-storiesOf('Scope', module)
-  .add('default view', () => {
+export default {
+  title: 'Scope'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const field = {
       value: 'FieldValue',
       text: 'FieldText'
     };
     const input = { };
     return renderField(field, input);
-  });
+  }
+};
+

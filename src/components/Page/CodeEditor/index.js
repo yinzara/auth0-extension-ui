@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react';
-import CodeMirror from 'react-codemirror';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import CodeMirror from 'codemirror';
+import 'codemirror/lib/codemirror.css';
 
-import 'codemirror';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/lint/lint.css';
@@ -16,7 +17,7 @@ export default class CodeEditor extends Component {
     value: PropTypes.string.isRequired,
     options: PropTypes.object.isRequired,
     onChange: PropTypes.func
-  }
+  };
 
   static defaultProps = {
     value: '',
@@ -43,53 +44,58 @@ export default class CodeEditor extends Component {
         }
       }
     }
-  }
+  };
 
-  constructor() {
-    super();
-    this.state = {
-      value: null
-    };
+  constructor(props) {
+    super(props);
+    this.container = React.createRef();
+    this.edited = false;
   }
 
   componentDidMount() {
-    const { editor } = this.refs;
-    editor.getCodeMirror().refresh();
+    const { value, options } = this.props;
+
+    this.editor = CodeMirror(this.container.current, { ...options, value: value || '' });
+    this.editor.on('change', this.onChange);
+    this.editor.refresh();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.value && !this.state.value) {
-      const { editor } = this.refs;
-      if (editor) {
-        editor.getCodeMirror().setValue(nextProps.value);
-      }
+  componentDidUpdate(prevProps) {
+    const { value } = this.props;
+
+    // Keep in sync with the value prop until the user starts typing.
+    if (value && !this.edited && value !== this.editor.getValue()) {
+      this.editor.setValue(value);
+    }
+
+    if (prevProps.options !== this.props.options) {
+      Object.keys(this.props.options).forEach((key) => this.editor.setOption(key, this.props.options[key]));
+    }
+
+    this.editor.refresh();
+  }
+
+  componentWillUnmount() {
+    if (this.editor) {
+      this.editor.off('change', this.onChange);
+      this.editor.getWrapperElement().remove();
+      this.editor = null;
     }
   }
 
-  componentDidUpdate() {
-    const { editor } = this.refs;
-    editor.getCodeMirror().refresh();
-  }
+  onChange = (editor, change) => {
+    if (change.origin === 'setValue') {
+      return;
+    }
 
-  onChange = (code) => {
-    this.setState({
-      value: code
-    });
+    this.edited = true;
 
     if (this.props.onChange) {
-      this.props.onChange(code);
+      this.props.onChange(editor.getValue());
     }
   };
 
   render() {
-    const { value, options } = this.props;
-    return (
-      <CodeMirror
-        ref="editor"
-        value={this.state.value || value || ''}
-        onChange={this.onChange}
-        options={options}
-      />
-  );
+    return <div ref={this.container} />;
   }
 }

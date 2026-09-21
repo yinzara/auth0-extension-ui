@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 import { Field } from 'redux-form';
 
 import InputCombo from './';
@@ -19,9 +18,16 @@ function renderField(field) {
   );
 }
 
-storiesOf('InputCombo', module)
-  .addDecorator(story => (<Provider store={store}><FakeForm>{story()}</FakeForm></Provider>))
-  .add('default view', () => {
+export default {
+  title: 'InputCombo',
+  decorators: [
+    Story => (<Provider store={store}><FakeForm><Story /></FakeForm></Provider>)
+  ]
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const field = {
       name: 'FieldName',
       label: 'My Label',
@@ -30,8 +36,12 @@ storiesOf('InputCombo', module)
       validationErrors: { }
     };
     return renderField(field);
-  })
-  .add('with error from validationErrors', () => {
+  }
+};
+
+export const WithErrorFromValidationErrors = {
+  name: 'with error from validationErrors',
+  render: () => {
     const field = {
       name: 'FieldName',
       label: 'My Label',
@@ -40,12 +50,18 @@ storiesOf('InputCombo', module)
       validationErrors: { FieldName: [ 'Required' ] }
     };
     return renderField(field);
-  })
-  .add('without label', () => {
+  }
+};
+
+export const WithoutLabel = {
+  name: 'without label',
+  render: () => {
     const field = {
       name: 'FieldName',
       placeholder: 'My placeholder',
       options: [ { value: 1, text: 'Option 1' }, { value: 2, text: 'Option 2' } ]
     };
     return renderField(field);
-  });
+  }
+};
+

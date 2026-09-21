@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const TableTotals = ({ currentCount, totalCount, textFormat }) => {
   if (currentCount === 0 || totalCount === 0) {

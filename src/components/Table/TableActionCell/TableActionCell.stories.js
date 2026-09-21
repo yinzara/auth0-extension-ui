@@ -1,11 +1,17 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 
 import TableActionCell from './';
 
-storiesOf('TableActionCell', module)
-  .add('default view', () => (
+export default {
+  title: 'TableActionCell'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => (
     <TableActionCell>
       This is the TableActionCell children.
     </TableActionCell>
-  ));
+  )
+};
+

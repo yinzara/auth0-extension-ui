@@ -1,32 +1,31 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 
 import Tab from './';
 import TabPane from '../TabPane';
-import FakeContext from '../../utils/FakeContext';
 
-storiesOf('Tab', module)
-  .add('default view', () => (
+export default {
+  title: 'Tab'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => (
     <Tab>
       <li>Users</li>
       <li>Groups</li>
     </Tab>
-  ))
-  .add('with TabPane components', () => {
-    const context = {
-      router: {
-        isActive: () => (true),
-        createHref: () => (true)
-      }
-    };
+  )
+};
+
+export const WithTabPaneComponents = {
+  name: 'with TabPane components',
+  render: () => {
     return (
       <Tab>
-        <FakeContext context={context}>
-          <TabPane title="Users" route="users" />
-        </FakeContext>
-        <FakeContext context={context}>
-          <TabPane title="Groups" route="groups" />
-        </FakeContext>
+        <TabPane title="Users" route="users" />
+        <TabPane title="Groups" route="groups" />
       </Tab>
     );
-  });
+  }
+};
+

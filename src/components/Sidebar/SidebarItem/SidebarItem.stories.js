@@ -1,36 +1,35 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 
 import SidebarItem from './';
-import FakeContext from '../../utils/FakeContext';
 
-function getContext() {
-  return {
-    router: {
-      isActive: () => (true),
-      createHref: () => (true)
-    }
-  };
-}
-storiesOf('SidebarItem', module)
-  .add('default view', () => (
-    <FakeContext context={getContext()}>
-      <SidebarItem title="Permissions" route="permissions" />
-    </FakeContext>
-  ))
-  .add('with icon view', () => (
-    <FakeContext context={getContext()}>
-      <SidebarItem
-        title="Permissions"
-        route="permissions"
-        icon={<i className="icon icon-budicon-488" />}
-      />
-    </FakeContext>
-  ))
-  .add('with children', () => (
-    <FakeContext context={getContext()}>
-      <SidebarItem title="Permissions">
+export default {
+  title: 'SidebarItem'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => (
+    <SidebarItem title="Permissions" route="permissions" />
+  )
+};
+
+export const WithIconView = {
+  name: 'with icon view',
+  render: () => (
+    <SidebarItem
+      title="Permissions"
+      route="permissions"
+      icon={<i className="icon icon-budicon-488" />}
+    />
+  )
+};
+
+export const WithChildren = {
+  name: 'with children',
+  render: () => (
+    <SidebarItem title="Permissions">
         This is the SidebarItem children.
-      </SidebarItem>
-    </FakeContext>
-  ));
+    </SidebarItem>
+  )
+};
+

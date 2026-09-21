@@ -1,11 +1,17 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 
 import TableRow from './';
 
-storiesOf('TableRow', module)
-  .add('default view', () => (
+export default {
+  title: 'TableRow'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => (
     <TableRow>
       This is the TableRow children.
     </TableRow>
-  ));
+  )
+};
+

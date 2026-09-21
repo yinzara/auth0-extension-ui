@@ -1,29 +1,43 @@
 import React from 'react';
-import { mount, shallow, render } from 'enzyme';
+import { mount } from 'enzyme';
 import { expect } from 'chai';
+import { MemoryRouter } from 'react-router';
 
 import TabPane from './';
 
 const { describe, it } = global;
 
 describe('TabPane', () => {
-  let wrapper;
   const title = 'Users';
-  beforeEach((done) => {
-    const context = { router: { isActive: () => true } };
-    wrapper = shallow(<TabPane title={title} route="users" />, {
-      context,
-      childContextTypes: { router: React.PropTypes.object }
-    });
-    done();
-  });
+  const render = (location) => mount(
+    <MemoryRouter initialEntries={[ location ]}>
+      <ul>
+        <TabPane title={title} route="users" />
+      </ul>
+    </MemoryRouter>
+  );
 
   it('should create TabPane', () => {
-    expect(wrapper.find('.active')).to.exist;
-    expect(wrapper.find('.script-button')).to.exist;
+    const wrapper = render('/users');
+    expect(wrapper.find('a.script-button')).to.have.length(1);
   });
 
   it('should create TabPane with provided title', () => {
-    expect(wrapper.find('Link > span').text()).to.be.equal(title);
+    const wrapper = render('/users');
+    expect(wrapper.find('span.tab-title').text()).to.be.equal(title);
+  });
+
+  it('should link to the route', () => {
+    const wrapper = render('/users');
+    expect(wrapper.find('a').props().href).to.equal('/users');
+  });
+
+  it('should be active when the route matches the location', () => {
+    expect(render('/users').find('li').hasClass('active')).to.equal(true);
+    expect(render('/users/123').find('li').hasClass('active')).to.equal(true);
+  });
+
+  it('should not be active when the route does not match the location', () => {
+    expect(render('/settings').find('li').hasClass('active')).to.equal(false);
   });
 });

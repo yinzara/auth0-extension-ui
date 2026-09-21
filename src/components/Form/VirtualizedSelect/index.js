@@ -1,11 +1,54 @@
-import React, { Component, PropTypes } from 'react';
-import Select from 'react-virtualized-select';
+import React, { Component, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
+import Select from 'react-select';
+import { List } from 'react-window';
 import classNames from 'classnames';
-import '../../../../node_modules/react-select/dist/react-select.css';
-import 'react-virtualized/styles.css';
-import 'react-virtualized-select/styles.css';
-import createFilterOptions from 'react-select-fast-filter-options';
-import './VirtualizedSelect.styl';
+import '../Multiselect/Multiselect.styl';
+
+const ROW_HEIGHT = 35;
+const MAX_MENU_HEIGHT = 300;
+
+const Row = ({ index, style, rows }) => (
+  <div style={style}>{rows[index]}</div>
+);
+
+Row.propTypes = {
+  index: PropTypes.number,
+  style: PropTypes.object,
+  rows: PropTypes.array
+};
+
+// Only renders the options which are visible, which keeps very long lists fast.
+const MenuList = ({ children, options, focusedOption }) => {
+  const listRef = useRef(null);
+  const rows = React.Children.toArray(children);
+
+  useEffect(() => {
+    const index = options.indexOf(focusedOption);
+    if (listRef.current && index >= 0 && index < rows.length) {
+      listRef.current.scrollToRow({ index });
+    }
+  }, [ focusedOption ]); 
+
+  return (
+    <List
+      listRef={listRef}
+      rowComponent={Row}
+      rowCount={rows.length}
+      rowHeight={ROW_HEIGHT}
+      rowProps={{ rows }}
+      style={{ height: Math.min(MAX_MENU_HEIGHT, rows.length * ROW_HEIGHT) }}
+    />
+  );
+};
+
+MenuList.propTypes = {
+  children: PropTypes.node,
+  options: PropTypes.array,
+  focusedOption: PropTypes.object
+};
+
+const components = { MenuList };
 
 class VirtualizedSelect extends Component {
 
@@ -19,8 +62,8 @@ class VirtualizedSelect extends Component {
     return null;
   }
 
-    renderValue = (value) => {
-      if (value.label === value.value || this.props.displayLabelOnly) {
+  renderValue = (value) => {
+    if (value.label === value.value || this.props.displayLabelOnly) {
       return (
         <span>
           <strong>{value.label}</strong>
@@ -34,57 +77,26 @@ class VirtualizedSelect extends Component {
         <span> ({value.value})</span>
       </span>
     );
-  }
-
-	renderOption = ({ focusedOption, focusOption, key, labelKey, option, selectValue, style, valueArray }) => {
-		const className = ['VirtualizedSelectOption']
-        if (option === focusedOption) {
-            className.push('VirtualizedSelectFocusedOption')
-        }
-        if (option.disabled) {
-            className.push('VirtualizedSelectDisabledOption')
-        }
-        if (valueArray && valueArray.indexOf(option) >= 0) {
-            className.push('VirtualizedSelectSelectedOption')
-        }
-        const events = option.disabled
-            ? {}
-            : {
-                onClick: () => selectValue(option),
-                onMouseEnter: () => focusOption(option)
-            }
-        const val = this.renderValue(option)
-        return (
-            <div className={className.join(' ')} key={key}
-                style={style}
-                title={option.title}
-                {...events}
-            >
-                {val}
-            </div>
-        );
-  }
+  };
 
   renderElement(input, placeholder, options, name, validationErrors, meta, multi = false) {
     // NOTE: see https://github.com/erikras/redux-form/issues/82 for onBlur() react-select docs
-    const tokenizer = {
-        tokenize: (text) => text.split(/[\s]+/)
-    };
-    const filterOptions = createFilterOptions({ options, tokenizer });
     return (
       <div>
         <Select
-          {...input}
-          className="react-multiselect"
+          className="react-multiselect react-multiselect-virtualized"
+          classNamePrefix="rms"
+          inputId={name}
           name={name}
-          ignoreAccents={false}
-          options={options}
-          filterOptions={filterOptions}
-          optionRenderer={this.renderOption}
-          valueRenderer={this.renderValue}
+          value={input.value || null}
+          onChange={input.onChange}
+          onFocus={input.onFocus}
           onBlur={() => input.onBlur()}
+          options={options}
+          components={components}
+          formatOptionLabel={this.renderValue}
           placeholder={placeholder}
-          multi={multi}
+          isMulti={multi}
         />
         {this.renderErrors(validationErrors, meta, name)}
       </div>

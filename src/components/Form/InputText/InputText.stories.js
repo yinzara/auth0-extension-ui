@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 import { Field } from 'redux-form';
 
 import InputText from './';
@@ -20,9 +19,16 @@ function renderField(field) {
   );
 }
 
-storiesOf('InputText', module)
-  .addDecorator(story => (<Provider store={store}><FakeForm>{story()}</FakeForm></Provider>))
-  .add('default view (text)', () => {
+export default {
+  title: 'InputText',
+  decorators: [
+    Story => (<Provider store={store}><FakeForm><Story /></FakeForm></Provider>)
+  ]
+};
+
+export const DefaultViewText = {
+  name: 'default view (text)',
+  render: () => {
     const field = {
       name: 'FieldName',
       label: 'My Label',
@@ -30,8 +36,12 @@ storiesOf('InputText', module)
       validationErrors: { }
     };
     return renderField(field);
-  })
-  .add('default view (number)', () => {
+  }
+};
+
+export const DefaultViewNumber = {
+  name: 'default view (number)',
+  render: () => {
     const field = {
       name: 'FieldName',
       label: 'My Label',
@@ -40,8 +50,12 @@ storiesOf('InputText', module)
       type: 'number'
     };
     return renderField(field);
-  })
-  .add('with error from validationErrors', () => {
+  }
+};
+
+export const WithErrorFromValidationErrors = {
+  name: 'with error from validationErrors',
+  render: () => {
     const field = {
       name: 'FieldName',
       label: 'My Label',
@@ -49,16 +63,24 @@ storiesOf('InputText', module)
       validationErrors: { FieldName: [ 'Required' ] }
     };
     return renderField(field);
-  })
-  .add('without label', () => {
+  }
+};
+
+export const WithoutLabel = {
+  name: 'without label',
+  render: () => {
     const field = {
       name: 'FieldName',
       placeholder: 'My placeholder',
       validationErrors: { }
     };
     return renderField(field);
-  })
-  .add('may be disabled', () => {
+  }
+};
+
+export const MayBeDisabled = {
+  name: 'may be disabled',
+  render: () => {
     const field = {
       name: 'FieldName',
       placeholder: 'My placeholder',
@@ -66,4 +88,6 @@ storiesOf('InputText', module)
       disabled: true
     };
     return renderField(field);
-  });
+  }
+};
+

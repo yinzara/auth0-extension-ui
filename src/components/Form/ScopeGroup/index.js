@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Scope from '../Scope';
 
 export default class ScopeGroup extends Component {
@@ -6,7 +7,7 @@ export default class ScopeGroup extends Component {
     input: PropTypes.object.isRequired,
     options: PropTypes.array.isRequired,
     label: PropTypes.string
-  }
+  };
 
   renderElement(input, options) {
     return (
@@ -34,7 +35,7 @@ export default class ScopeGroup extends Component {
   }
 
   render() {
-    const { input, input: { name }, label, options } = this.props;
+    const { input, label, options } = this.props;
 
     if (!label) {
       return this.renderElement(input, options);
