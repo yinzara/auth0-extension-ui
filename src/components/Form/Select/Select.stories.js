@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 import { Field } from 'redux-form';
 
 import Select from './';
@@ -20,9 +19,16 @@ function renderField(field) {
   );
 }
 
-storiesOf('Select', module)
-  .addDecorator(story => (<Provider store={store}><FakeForm>{story()}</FakeForm></Provider>))
-  .add('default view', () => {
+export default {
+  title: 'Select',
+  decorators: [
+    Story => (<Provider store={store}><FakeForm><Story /></FakeForm></Provider>)
+  ]
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const field = {
       name: 'FieldName',
       placeholder: 'my placeholder',
@@ -40,8 +46,12 @@ storiesOf('Select', module)
       }
     };
     return renderField(field);
-  })
-  .add('with label', () => {
+  }
+};
+
+export const WithLabel = {
+  name: 'with label',
+  render: () => {
     const field = {
       name: 'FieldName',
       label: 'Label',
@@ -60,24 +70,31 @@ storiesOf('Select', module)
       }
     };
     return renderField(field);
-	}).add('with displayLabelOnly', () => {
-		const field = {
-			name: 'FieldName',
-			label: 'Label',
-			placeholder: 'My placeholder',
-			displayLabelOnly: true,
-			loadOptions: (input, callback) => {
-				callback(null, {
-					options: [
-						{ label: 'Ariel Gerstein', value: 'ariel@auth0.com' },
-						{ label: 'Victor Fernandez', value: 'victor@auth0.com' },
-						{ label: 'Ricky Rauch', value: 'ricky@auth0.com' },
-						{ label: 'Tomas Cherna', value: 'cherna@auth0.com' },
-						{ label: 'Toon De Coninck', value: 'Toon De Coninck' }
-					],
-					complete: true
-				});
-			}
-		};
-		return renderField(field);
-	});
+  }
+};
+
+export const WithDisplayLabelOnly = {
+  name: 'with displayLabelOnly',
+  render: () => {
+    const field = {
+      name: 'FieldName',
+      label: 'Label',
+      placeholder: 'My placeholder',
+      displayLabelOnly: true,
+      loadOptions: (input, callback) => {
+        callback(null, {
+          options: [
+            { label: 'Ariel Gerstein', value: 'ariel@auth0.com' },
+            { label: 'Victor Fernandez', value: 'victor@auth0.com' },
+            { label: 'Ricky Rauch', value: 'ricky@auth0.com' },
+            { label: 'Tomas Cherna', value: 'cherna@auth0.com' },
+            { label: 'Toon De Coninck', value: 'Toon De Coninck' }
+          ],
+          complete: true
+        });
+      }
+    };
+    return renderField(field);
+  }
+};
+

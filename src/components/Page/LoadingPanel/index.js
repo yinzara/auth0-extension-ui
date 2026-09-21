@@ -1,93 +1,58 @@
-import React, { Component, PropTypes } from 'react';
-import Loader from 'react-loader-advanced';
-import Spinner from './svg/Spinner.svg';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
-class LoadingPanel extends Component {
-  constructor(props) {
-    super(props);
+const overlayStyle = {
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  bottom: 0,
+  left: 0,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  zIndex: 1
+};
 
-    this.state = {
-      show: props.show || false
-    };
+const LoadingPanel = ({ show, delay, backgroundStyle, children }) => {
+  const [ loading, setLoading ] = useState(!!show);
 
-    // Default styles.
-    this.backgroundStyle = {
-      padding: '5px',
-      backgroundColor: 'rgba(255,255,255,0.8)',
-      minHeight: '50px',
-      ...this.props.backgroundStyle
-    };
-    this.spinnerStyle = {
-      display: 'inline-block',
-      height: '64px',
-      width: '64px',
-      margin: '0px auto',
-      ...this.props.spinnerStyle
-    };
-    this.animationStyle = {
-      backgroundColor: 'transparent',
-      textAlign: 'center',
-      paddingTop: '55px',
-      paddingBottom: '55px',
-      marginTop: '10px',
-      marginBottom: '10px',
-      ...this.props.animationStyle
-    };
-  }
-
-  componentWillMount() {
-    if (this.showTimer) {
-      clearTimeout(this.showTimer);
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.show) {
-      clearTimeout(this.showTimer);
-      this.showTimer = null;
-      this.stopLoading();
-    } else if (!this.showTimer) {
-      this.showTimer = setTimeout(this.startLoading, this.props.delay || 200);
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.showTimer) {
-      clearTimeout(this.showTimer);
-    }
-  }
-
-  stopLoading = () => {
-    this.setState({
-      show: false
-    });
-  }
-
-  startLoading = () => {
-    this.setState({
-      show: true
-    });
-  }
-
-  render() {
-    if (!this.state.show) {
-      return <div>{this.props.children}</div>;
+  // Only show the spinner after `delay` ms, to avoid flashing it for fast requests.
+  useEffect(() => {
+    if (!show) {
+      setLoading(false);
+      return undefined;
     }
 
-    const animation = (<div className="spinner spinner-sm" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
-      <div className="circle" />
-    </div>);
+    const timer = setTimeout(() => setLoading(true), delay || 200);
+    return () => clearTimeout(timer);
+  }, [ show, delay ]);
 
-    return (<Loader show={this.state.show} message={animation} backgroundStyle={this.backgroundStyle}>
-      {this.props.children}
-    </Loader>);
+  if (!loading) {
+    return <div>{children}</div>;
   }
-}
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <div
+        style={{
+          ...overlayStyle,
+          padding: '5px',
+          backgroundColor: 'rgba(255,255,255,0.8)',
+          minHeight: '50px',
+          ...backgroundStyle
+        }}
+      >
+        <div className="spinner spinner-sm" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+          <div className="circle" />
+        </div>
+      </div>
+      {children}
+    </div>
+  );
+};
 
 LoadingPanel.propTypes = {
   backgroundStyle: PropTypes.object,
-  spinnerStyle: PropTypes.object,
-  animationStyle: PropTypes.object,
   show: PropTypes.bool,
   delay: PropTypes.number,
   children: PropTypes.node

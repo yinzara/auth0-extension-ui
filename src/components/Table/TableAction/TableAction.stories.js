@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { action } from 'storybook/actions';
 
 import TableAction from './';
 
@@ -17,8 +17,13 @@ function renderField(field) {
   );
 }
 
-storiesOf('TableAction', module)
-  .add('default view', () => {
+export default {
+  title: 'TableAction'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const field = {
       id: 'delete-permission',
       type: 'default',
@@ -28,4 +33,6 @@ storiesOf('TableAction', module)
       disabled: false
     };
     return renderField(field);
-  });
+  }
+};
+

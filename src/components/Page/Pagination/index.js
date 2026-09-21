@@ -1,10 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
 class Pagination extends Component {
   static defaultProps = {
     textFormat: 'Page {current} of {total}'
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -38,13 +39,13 @@ class Pagination extends Component {
           {this.buildText(this.props.textFormat, this.state.activePage, pages)}
         </div>
         <div className="col-xs-4">
-          <Button bsSize="small" className="pull-right"
+          <Button variant="default" size="sm" className="pull-right"
             onClick={this.handlePageChange.bind(this, 1)}
             disabled={this.state.activePage === pages}
           >
             <i className="icon-budicon-175" />
           </Button>
-          <Button bsSize="small" className="pull-right"
+          <Button variant="default" size="sm" className="pull-right"
             onClick={this.handlePageChange.bind(this, -1)}
             disabled={this.state.activePage === 1}
           >

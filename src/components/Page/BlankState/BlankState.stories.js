@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 
 import BlankState from './';
 
@@ -15,8 +14,13 @@ function renderField(field) {
   );
 }
 
-storiesOf('BlankState', module)
-  .add('default view', () => {
+export default {
+  title: 'BlankState'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const field = {
       title: 'The title',
       iconImage: (
@@ -27,4 +31,6 @@ storiesOf('BlankState', module)
       description: 'The description.'
     };
     return renderField(field);
-  });
+  }
+};
+

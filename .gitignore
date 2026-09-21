@@ -1,3 +1,7 @@
 node_modules
 *.log
 .idea
+.omc
+dist
+.out
+storybook-static

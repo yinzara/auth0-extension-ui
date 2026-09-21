@@ -1,10 +1,14 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 
 import Json from './';
 
-storiesOf('Json', module)
-  .add('default view', () => {
+export default {
+  title: 'Json'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const jsonObject = {
       name: 'json object title',
       items: {
@@ -14,4 +18,6 @@ storiesOf('Json', module)
       list: [ 'first', 'second' ]
     };
     return <Json jsonObject={jsonObject} />;
-  });
+  }
+};
+

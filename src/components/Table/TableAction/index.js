@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import './TableAction.styl';
 
@@ -21,10 +22,10 @@ class TableAction extends Component {
     return (
       <OverlayTrigger placement="top" overlay={<Tooltip id={this.props.id}>{this.props.title}</Tooltip>}>
         <Button
-          className="table-action"
+          className="table-action btn-xs"
           onClick={this.onClick}
-          bsStyle={this.props.type || 'default'}
-          bsSize="xsmall"
+          variant={this.props.type || 'default'}
+          size="sm"
           disabled={this.props.disabled}
         >
           <i className={`icon icon-budicon-${this.props.icon}`} style={{ marginRight: '0px' }} />

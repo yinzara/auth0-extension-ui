@@ -1,14 +1,20 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 
 import CodeEditor from './';
 require('codemirror/mode/xml/xml');
 
-storiesOf('CodeEditor', module)
-  .add('default view', () => {
+export default {
+  title: 'CodeEditor'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const messageOptions = {
       mode: 'xml'
     };
     const value = '<div>\nHello! This is the <strong>code editor</strong>.\n<p>New paragraph.</p>\n</div>';
     return <CodeEditor value={value} options={messageOptions} />;
-  });
+  }
+};
+

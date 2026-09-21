@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 
 import EntityHeader from './';
 
@@ -15,12 +14,19 @@ function renderField(field) {
   );
 }
 
-storiesOf('EntityHeader', module)
-  .add('default view', () => {
+export default {
+  title: 'EntityHeader'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const field = {
       imgSource: 'https://cdn.auth0.com/avatars/1s.png',
       primaryText: 'This is the primary text',
       secondaryText: 'This is the secondary text'
     };
     return renderField(field);
-  });
+  }
+};
+

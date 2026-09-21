@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 
 import SectionHeader from './';
 
@@ -15,12 +14,19 @@ function renderField(field) {
   );
 }
 
-storiesOf('SectionHeader', module)
-  .add('default view', () => {
+export default {
+  title: 'SectionHeader'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const field = {
       title: 'This is the title',
       description: 'This is the description',
       isSubsection: true
     };
     return renderField(field);
-  });
+  }
+};
+

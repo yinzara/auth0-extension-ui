@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
+import { MemoryRouter } from 'react-router';
 
 import TableRouteCell from './';
 
@@ -11,7 +12,17 @@ describe('TableRouteCell', () => {
     title: 'Route name',
     route: '/someroute'
   };
-  const wrapper = mount(<TableRouteCell route={field.route}>{field.title}</TableRouteCell>);
+  const wrapper = mount(
+    <MemoryRouter>
+      <table>
+        <tbody>
+          <tr>
+            <TableRouteCell route={field.route}>{field.title}</TableRouteCell>
+          </tr>
+        </tbody>
+      </table>
+    </MemoryRouter>
+  );
 
   it('should render one td item', () => {
     expect(wrapper.find('td')).to.have.length(1);
@@ -22,7 +33,11 @@ describe('TableRouteCell', () => {
   });
 
   it('should have on Link component', () => {
-    expect(wrapper.find('Link')).to.exist;
+    expect(wrapper.find('Link')).to.have.length(1);
     expect(wrapper.find('Link').props().to).to.equal(field.route);
+  });
+
+  it('should link to the route', () => {
+    expect(wrapper.find('a').props().href).to.equal(field.route);
   });
 });

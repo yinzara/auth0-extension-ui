@@ -1,16 +1,24 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 
 import Table from './';
 import { TableHeader, TableColumn, TableBody, TableRow, TableCell, TableIconCell, TableTextCell } from '../../';
 
-storiesOf('Table', module)
-  .add('default view', () => (
+export default {
+  title: 'Table'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => (
     <Table>
       My table content
     </Table>
-  ))
-  .add('sample table', () => (
+  )
+};
+
+export const SampleTable = {
+  name: 'sample table',
+  render: () => (
     <Table>
       <TableHeader>
         <TableColumn width="10%" />
@@ -27,4 +35,6 @@ storiesOf('Table', module)
         </TableRow>
       </TableBody>
     </Table>
-  ));
+  )
+};
+

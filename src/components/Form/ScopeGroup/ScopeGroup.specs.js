@@ -6,7 +6,7 @@ import { Field } from 'redux-form';
 import { addFormDecorator } from '../../utils/formUtils';
 import ScopeGroup from './';
 
-const { describe, it } = global;
+const { describe } = global;
 
 describe('ScopeGroup', () => {
   xit('should show one group with two input fields', () => {

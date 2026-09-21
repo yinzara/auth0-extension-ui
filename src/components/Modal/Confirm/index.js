@@ -1,11 +1,12 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Button, Modal } from 'react-bootstrap';
 
 class Confirm extends Component {
   renderCancel() {
     if (this.props.onCancel) {
       return (
-        <Button className="button-cancel" bsStyle="transparent" bsSize="large" disabled={this.props.loading} onClick={this.props.onCancel}>
+        <Button className="button-cancel" variant="transparent" size="lg" disabled={this.props.loading} onClick={this.props.onCancel}>
           { this.props.cancelMessage || 'Cancel' }
         </Button>
       );
@@ -17,7 +18,7 @@ class Confirm extends Component {
   renderConfirm() {
     if (this.props.onConfirm) {
       return (
-        <Button className="button-confirm" bsStyle="primary" bsSize="large" disabled={this.props.loading} onClick={this.props.onConfirm}>
+        <Button className="button-confirm" variant="primary" size="lg" disabled={this.props.loading} onClick={this.props.onConfirm}>
           { this.props.confirmMessage || <span><i className="icon icon-budicon-499" /> Confirm</span> }
         </Button>
       );
@@ -29,7 +30,13 @@ class Confirm extends Component {
   render() {
     return (
       <Modal className={this.props.className} dialogClassName={this.props.dialogClassName} show={this.props.show} onHide={this.props.onCancel}>
-        <Modal.Header className="has-border" closeButton={!this.props.loading} closeLabel={this.props.closeLabel || ''}>
+        <Modal.Header className="has-border">
+          {!this.props.loading && (
+            <button type="button" className="close" onClick={this.props.onCancel}>
+              <span aria-hidden="true">&times;</span>
+              <span className="sr-only">{this.props.closeLabel || ''}</span>
+            </button>
+          )}
           <Modal.Title>{this.props.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>

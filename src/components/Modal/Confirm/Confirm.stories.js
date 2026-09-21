@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { action } from 'storybook/actions';
 
 import Confirm from './';
 
@@ -19,8 +19,13 @@ function renderField(field) {
   );
 }
 
-storiesOf('Confirm', module)
-  .add('default view', () => {
+export default {
+  title: 'Confirm'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const field = {
       title: 'The title',
       show: true,
@@ -29,4 +34,6 @@ storiesOf('Confirm', module)
       className: 'Confirm--myclass'
     };
     return renderField(field);
-  });
+  }
+};
+

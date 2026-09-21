@@ -1,16 +1,26 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 
 import TableCell from './';
 
-storiesOf('TableCell', module)
-  .add('default view', () => (
+export default {
+  title: 'TableCell'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => (
     <TableCell>
       This is the TableCell children.
     </TableCell>
-  ))
-  .add('styled view', () => (
+  )
+};
+
+export const StyledView = {
+  name: 'styled view',
+  render: () => (
     <TableCell style={{ color: 'blue' }}>
       This is the TableCell children.
     </TableCell>
-  ));
+  )
+};
+

@@ -1,11 +1,12 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Scope extends Component {
   static propTypes = {
     field: PropTypes.object.isRequired,
     value: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired
-  }
+  };
 
   onChange = (event) => {
     const { value, field } = this.props;
@@ -23,7 +24,7 @@ export default class Scope extends Component {
         field.onChange(copy);
       }
     }
-  }
+  };
 
   isChecked = (field, value) => field.value && field.value.indexOf(value) >= 0;
 

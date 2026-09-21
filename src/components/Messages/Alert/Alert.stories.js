@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { action } from 'storybook/actions';
 
 import Alert from './';
 
@@ -9,8 +9,13 @@ function renderField(field) {
   );
 }
 
-storiesOf('Alert', module)
-  .add('default view', () => {
+export default {
+  title: 'Alert'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const field = {
       show: true,
       type: 'info',
@@ -18,4 +23,6 @@ storiesOf('Alert', module)
       close: action('closeAlertMessage')
     };
     return renderField(field);
-  });
+  }
+};
+

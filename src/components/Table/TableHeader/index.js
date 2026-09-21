@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const TableHeader = ({ children }) => (
   <thead>
     <tr>
-    { children }
+      { children }
     </tr>
   </thead>
 );

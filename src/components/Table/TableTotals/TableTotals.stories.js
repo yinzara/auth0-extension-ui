@@ -1,13 +1,19 @@
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
 
 import TableTotals from './';
 
-storiesOf('TableTotals', module)
-  .add('default view', () => {
+export default {
+  title: 'TableTotals'
+};
+
+export const DefaultView = {
+  name: 'default view',
+  render: () => {
     const field = {
       currentCount: 5,
       totalCount: 10
     };
     return (<TableTotals currentCount={field.currentCount} totalCount={field.totalCount} />);
-  });
+  }
+};
+

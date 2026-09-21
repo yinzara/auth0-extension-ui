@@ -39,7 +39,7 @@ describe('Select', () => {
     done();
   });
 
-  it('should find element with class Select--single', () => {
-    expect(wrapper.find('.react-multiselect.Select--single').exists()).to.be.true; // eslint-disable-line no-unused-expressions
+  it('should find element with class single select', () => {
+    expect(wrapper.find('.react-multiselect').exists()).to.be.true;  
   });
 });

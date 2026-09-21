@@ -49,7 +49,7 @@ describe('TableAction', () => {
   });
 
   it('should have a Button with provided style', () => {
-    expect(wrapper.find('Button').props().bsStyle).to.be.equal(field.type);
+    expect(wrapper.find('Button').props().variant).to.be.equal(field.type);
   });
 
   it('should have an icon with provided class', () => {

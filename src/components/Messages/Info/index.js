@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Alert from '../Alert';
 
 class Info extends Component {
   static defaultProps = {
     show: true
-  }
+  };
 
   render() {
     return (
@@ -22,10 +23,10 @@ class Info extends Component {
 }
 
 Info.propTypes = {
-  show: React.PropTypes.bool,
-  message: React.PropTypes.string,
-  onDismiss: React.PropTypes.func,
-  children: React.PropTypes.node
+  show: PropTypes.bool,
+  message: PropTypes.string,
+  onDismiss: PropTypes.func,
+  children: PropTypes.node
 };
 
 export default Info;

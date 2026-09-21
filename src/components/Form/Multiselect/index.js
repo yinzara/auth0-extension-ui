@@ -1,8 +1,21 @@
-import React, { Component, PropTypes } from 'react';
-import Select from 'react-select';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import AsyncSelect from 'react-select/async';
 import classNames from 'classnames';
-import '../../../../node_modules/react-select/dist/react-select.css';
 import './Multiselect.styl';
+
+// Supports both the callback style `loadOptions(input, (err, { options }) => {})` and promises.
+const adaptLoadOptions = (loadOptions) => (input) => new Promise((resolve, reject) => {
+  const done = (err, data) => {
+    if (err) return reject(err);
+    return resolve((data && data.options) || (Array.isArray(data) ? data : []));
+  };
+
+  const result = loadOptions(input, done);
+  if (result && typeof result.then === 'function') {
+    result.then((data) => done(null, data), reject);
+  }
+});
 
 class Multiselect extends Component {
 
@@ -17,7 +30,7 @@ class Multiselect extends Component {
   }
 
   renderValue = (value) => {
-      if (value.label === value.value || this.props.displayLabelOnly) {
+    if (value.label === value.value || this.props.displayLabelOnly) {
       return (
         <span>
           <strong>{value.label}</strong>
@@ -31,26 +44,26 @@ class Multiselect extends Component {
         <span> ({value.value})</span>
       </span>
     );
-  }
-
-  renderOption = (value) => {
-    return this.renderValue(value)
-  }
+  };
 
   renderElement(input, placeholder, loadOptions, name, validationErrors, meta, multi = true) {
     // NOTE: see https://github.com/erikras/redux-form/issues/82 for onBlur() react-select docs
     return (
       <div>
-        <Select.Async
-          {...input}
+        <AsyncSelect
           className="react-multiselect"
+          classNamePrefix="rms"
+          inputId={name}
           name={name}
-          loadOptions={loadOptions}
-          optionRenderer={this.renderOption}
-          valueRenderer={this.renderValue}
+          value={input.value || null}
+          onChange={input.onChange}
+          onFocus={input.onFocus}
           onBlur={() => input.onBlur()}
+          defaultOptions
+          loadOptions={adaptLoadOptions(loadOptions)}
+          formatOptionLabel={this.renderValue}
           placeholder={placeholder}
-          multi={multi}
+          isMulti={multi}
         />
         {this.renderErrors(validationErrors, meta, name)}
       </div>
